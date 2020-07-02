@@ -26,12 +26,13 @@
     <div class="row-cols-3 portfolio-container" data-aos="fade-up" data-aos-delay="200">
       {% for review in reviews %}
         <div class="col-md-4 portfolio-item filter-app">
-            <img src="{{ review.food_name.url }}" class="img-fluid" alt="">
+            <img src="{{ review.user.food_name.url }}" class="img-fluid" alt="없어용">
             <div class="portfolio-info">
               <h4>{{ review.user.username }}</h4>
                 <h5>{{ review.restaurant_name }}<a>({{ review.food_name }})</a></h5>
                 <p>{{ review.user }}</p>
                 <p>{{ review.restaurant_address}}</p>
+                <input type="button" onclick="window.open('http://127.0.0.1:8000/review/{{review.user.id}}/comment_create', '리뷰남기기', 'width=350, height=300, top=200, left=200, toolbar=no, scrollbars=no, resizable=no');" value="댓글달기">
             </div>
         </div>
       {% endfor %}

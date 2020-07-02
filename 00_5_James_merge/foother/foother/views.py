@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 
 
 def foother_index(request):
+    ""
     reviews = Review.objects.all()
     paginator = Paginator(reviews, 12)
     

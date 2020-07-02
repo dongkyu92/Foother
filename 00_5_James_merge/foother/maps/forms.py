@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Comment
 from django.forms.widgets import SelectDateWidget
 
 class ReviewForm(forms.ModelForm):
@@ -68,8 +68,22 @@ class ReviewForm(forms.ModelForm):
         ),
     )
 
-
-    
     class Meta:
         model = Review
         exclude = ('user',)
+
+
+
+
+class CommentForm(forms.ModelForm):
+    contents = forms.CharField(
+        label = '댓글을 남겨주세여',
+        widget = forms.Textarea(
+            attrs={
+                'placeholder': '댓글!!'
+            }
+        )
+    )
+    class Meta:
+        model = Comment
+        fields = ['contents',]

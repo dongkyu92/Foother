@@ -13,13 +13,12 @@
 <form action="{% url 'maps:create' %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <button class="btn btn-success">전송</button>
+  <button class="btn btn-success">업로드하기</button>
 </form>
 <hr>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-
 // 검색을 위한 돔 객체 생성
 var addressSearch = document.getElementById('addressSearch')
 var searchBtn = document.getElementById('searchBtn')
@@ -38,7 +37,19 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 // 주소검색 버튼 클릭
 searchBtn.addEventListener('click', function(event){
-    axios.get('https://dapi.kakao.com/v2/local/search/keyword.json?y=37.514322572335935&x=127.06283102249932&radius=20000',
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    function showPosition(position) {
+        //x.innerHTML="위도: " + position.coords.latitude + "<br />경도: " + position.coords.longitude;   
+      var latitude = position.coords.latitude
+      var longtitude = position.coords.longitude
+    
+    console.log(latitude)
+    console.log(longtitude)
+    
+    axios.get('https://dapi.kakao.com/v2/local/search/keyword.json?y='+longtitude+'&x='+latitude,
     { params: {
         query: addressSearch.value,
         category_group_code: 'FD6',
@@ -63,9 +74,9 @@ searchBtn.addEventListener('click', function(event){
           var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
               mapOption = {
                   
-                  center: new kakao.maps.LatLng(lng, lat), // 지도의 중심좌표
+                  center: new kakao.maps.LatLng(longtitude, latitude), // 지도의 중심좌표
                   //center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                  level: 4 // 지도의 확대 레벨
+                  level: 3 // 지도의 확대 레벨
               };
 
           // 지도를 생성합니다.
@@ -75,7 +86,9 @@ searchBtn.addEventListener('click', function(event){
           var ps = new kakao.maps.services.Places(); 
 
           // 키워드로 장소를 검색합니다
-          ps.keywordSearch(addressSearch.value, placesSearchCB);
+          ps.keywordSearch(addressSearch.value, placesSearchCB,{
+            location: new kakao.maps.LatLng(latitude, longtitude)
+          });
 
           // 키워드 검색 완료 시 호출되는 콜백함수 입니다
           function placesSearchCB (data, status, pagination) {
@@ -88,6 +101,7 @@ searchBtn.addEventListener('click', function(event){
                   for (var i=0; i<data.length; i++) {
                       displayMarker(data[i]);    
                       bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                      console.log(data[i].road_address_name)
                   }       
                   // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
                   map.setBounds(bounds);
@@ -114,7 +128,7 @@ searchBtn.addEventListener('click', function(event){
                     '</ol></div>');
                     infowindow.open(map, marker);
 
-                     // 리뷰로 올릴 위도 설정
+                    // 리뷰로 올릴 위도 설정
                       var lat = document.querySelector('#id_lat')
                       lat.value = place.y;
 
@@ -131,9 +145,8 @@ searchBtn.addEventListener('click', function(event){
                       restaurant_address.value = place.road_address_name
                 });
             }
-                }).catch(
-                  alert("검색 결과가 없습니다.🥵")
-                )
+                })
+    }
 })
 {% comment %} 
   //리뷰로 올릴 음식 이름 설정
@@ -157,7 +170,7 @@ searchBtn.addEventListener('click', function(event){
 </script>
 
 
-<hr>
+ <hr>
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">

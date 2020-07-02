@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-
 # Create your models here.
 class Review(models.Model):
     # hidden
@@ -35,3 +34,9 @@ class Review(models.Model):
     # ForeignKey
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='')
+
+
+class Comment(models.Model):
+    contents = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
