@@ -6,6 +6,5 @@ app_name = 'maps'
 
 
 urlpatterns = [
-    path('create/', views.review, name='review'),
-    path('profile/<str:username>/', views.profile, name='profile'),
+    path('create/', views.create, name='create'),
 ]

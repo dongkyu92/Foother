@@ -1,32 +1,31 @@
 {% load static %}
 
-
-
 <!-- ======= Portfolio Section ======= -->
 <section id="all" class="portfolio section-bg">
   <div class="container" data-aos="fade-up">
     <div class="section-title">
-      <h2>뉴스피드</h2>
-      {% comment %} <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> {% endcomment %}
+      <h2>Hot Menus!</h2>
+      <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
     </div>
 
     <div class="row">
       <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
         <ul id="portfolio-flters">
-          <li data-filter="*" class="filter-active">전체</li>
-          <li data-filter=".filter-Korean">한식</li>
-          <li data-filter=".filter-Japense">일식</li>
-          <li data-filter=".filter-Chinese">중식</li>
-          <li data-filter=".filter-American">양식</li>
-          <li data-filter=".filter-SouthEastern">동남아식</li>
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-Korean">Korean</li>
+          <li data-filter=".filter-Japense">Japense</li>
+          <li data-filter=".filter-Chinese">Chinese</li>
+          <li data-filter=".filter-American">American</li>
+          <li data-filter=".filter-SouthEastern">SouthEastern</li>
         </ul>
       </div>
     </div>
 
     <div class="row-cols-3 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
       {% for review in reviews %}
         <div class="col-md-4 portfolio-item filter-app">
-            <img src="{{ review.food_name.url }}" class="img-fluid" alt="">
+            <img src="{{ review.fooe_name }}" class="img-fluid" alt="">
             <div class="portfolio-info">
               <h4>{{ review.user.username }}</h4>
                 <h5>{{ review.restaurant_name }}<a>({{ review.food_name }})</a></h5>
@@ -112,4 +111,5 @@
 </div>
   </div>
 </section>
+
 
