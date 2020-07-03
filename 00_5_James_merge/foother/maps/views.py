@@ -39,7 +39,7 @@ def comment_create(request,pk):
             print(comment)
             comment.review = review
             comment.save()
-            return redirect('accounts:profile', review.user.username)
+            return redirect('maps:comment_create_complete')
     else:
         print("comment get 들어옴")
         form = CommentForm()
@@ -50,3 +50,6 @@ def comment_create(request,pk):
         print(form)
     
     return render(request, 'maps/review_comment_create.html',context)
+
+def comment_create_complete(request):
+    return render(request, 'maps/complete.html')

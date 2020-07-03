@@ -13,7 +13,13 @@
     </form>
 
     <script>
-        comment_create_btn = document.getElementById("comment_create_btn")
+        {% comment %} comment_create_btn = document.getElementById("comment_create_btn")
+        comment_create_btn.onclick = function(){
+            //opener.parent.location.reload();
+                
+                window.open("about:blank", "_self").close()
+                
+            } {% endcomment %}
         
     </script>
 </body>
