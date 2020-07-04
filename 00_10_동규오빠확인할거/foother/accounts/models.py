@@ -16,6 +16,6 @@ class User(AbstractUser):
                         'quality': 70},
                     default='default.png'
     )
-    # class Meta:
-    #     ordering = ['-score']
+    class Meta:
+        ordering = ['-user_score']
     

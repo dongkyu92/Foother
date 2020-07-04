@@ -35,6 +35,7 @@
       {% if request.user.is_authenticated %}
         <li><a href="{% url 'accounts:logout' %}"><img src="{% static 'img/nav/logout.png' %}" class="nav-icon mr-2 ml-2">로그아웃</a></li>
       {% endif %}
+        <li>{{reviews}}</li>
       </ul>
     </nav><!-- .nav-menu -->
 

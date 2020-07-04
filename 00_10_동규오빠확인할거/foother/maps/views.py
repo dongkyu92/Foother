@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from decouple import config
 from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
+from accounts.models import User
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -11,11 +12,20 @@ from django.http import JsonResponse
 @require_http_methods(['GET', 'POST'])
 def review_create(request):
     # user = request.user
+    
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
+
         if form.is_valid():
             review = form.save(commit=False)
+            print("글 올리기 전 유저 스코어")
+            print(request.user.user_score)
+            request.user.user_score = request.user.user_score + 1
+            request.user.save()
+            print("글 올린 후 유저 스코어")
+            print(request.user.user_score)
             review.user = request.user
+            
             review.save()
             return redirect('accounts:profile', review.user.username)
 
